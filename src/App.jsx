@@ -1,7 +1,7 @@
 import { useState } from "react"
-import "bootstrap/dist/css/bootstrap.min.css"
 
-
+import './App.css'
+import {MdChevronLeft, MdChevronRight} from 'react-icons/md'
 import { MovieList } from "./components/MovieList"
 
 
@@ -81,12 +81,29 @@ function App() {
 
   ])
 
-  console.log(movies)
+  const slideLeft = () =>{
+    const slider =document.getElementById('slider')
+    slider.scrollLeft = slider.scrollLeft - 500
+  }
+
+  const slideRight = () =>{
+    const slider =document.getElementById('slider')
+    slider.scrollLeft = slider.scrollLeft + 500
+  }
 
   return (
-    <div>
-      <MovieList movies={movies}/>
-    </div>
+    <>
+      <div className="relative flex items-center">
+        <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={slideLeft} size={40}/>
+
+        <div id="slider" className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
+          <MovieList movies={movies}/>
+        </div>
+        
+        <MdChevronRight className='opacity-50 cursor-pointer hover:opacity-100' onClick={slideRight} size={40}/>
+      </div>
+    </>
+    
   )
 }
 
