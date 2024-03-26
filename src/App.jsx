@@ -39,7 +39,7 @@ function App() {
   useEffect( () =>{
       axios
       .get(
-        `https://www.omdbapi.com/?s=${searchValue}&apikey=6eb483b4`
+        `https://www.omdbapi.com/?s=${searchValue}&apikey=${api_key}`
       )
       .then(response =>{
         if(response.data.Search){
