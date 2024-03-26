@@ -18,7 +18,7 @@ function App() {
 
   const [movies, setMovies] =useState([])
   const [favourites, setFavourites] =useState([])
-  const [searchValue, setSearchValue] =useState('star wars')
+  const [searchValue, setSearchValue] =useState('')
 
   //efecto de scroll
   const slideLeft = (id) =>{
