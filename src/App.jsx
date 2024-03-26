@@ -52,6 +52,12 @@ function App() {
       })
     },[searchValue, api_key])
 
+    useEffect(()=>{
+      const movieFavourites = JSON.parse(
+        localStorage.getItem('react-movie-website'))
+      
+      setFavourites(movieFavourites) 
+    },[])
 
     const saveToLocalStorage = (items) => {
       localStorage.setItem('react-movie-website', JSON.stringify(items))
@@ -73,6 +79,7 @@ function App() {
       const newFavouriteList = favourites.filter(
         (favourite)=> favourite.imdbID !== movie.imdbID)
         setFavourites(newFavouriteList)
+        saveToLocalStorage(newFavouriteList)
         toast.success("¡Película eliminada de favoritos!");
     }
   
