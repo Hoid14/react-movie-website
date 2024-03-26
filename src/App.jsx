@@ -68,8 +68,10 @@ function App() {
         const newFavouriteList = [...favourites, movie];
         setFavourites(newFavouriteList);
         saveToLocalStorage(newFavouriteList)
+        toast.dismiss()
         toast.success("¡Película agregada a favoritos!");
       } else {
+        toast.dismiss()
         toast.error("Esta película ya está en tus favoritos.");
       }
       
@@ -80,6 +82,7 @@ function App() {
         (favourite)=> favourite.imdbID !== movie.imdbID)
         setFavourites(newFavouriteList)
         saveToLocalStorage(newFavouriteList)
+        toast.dismiss()
         toast.success("¡Película eliminada de favoritos!");
     }
   
@@ -95,7 +98,7 @@ function App() {
           <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={()=>slideLeft("search-slider")} size={40}/>
 
           <div id="search-slider" className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
-            <MovieList movies={movies} handleFavouritesClick={addFavouriteMovie} favouriteComponent={AddFavourites}/>
+            <MovieList movies={movies} handleFavouritesClick={addFavouriteMovie} favouriteComponent={AddFavourites} message={"No se ha buscado peliculas"}/>
           </div>
           
           <MdChevronRight className='opacity-50 cursor-pointer hover:opacity-100' onClick={()=>slideRight("search-slider")} size={40}/>
@@ -111,7 +114,7 @@ function App() {
           <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={()=>slideLeft("favourites-slider")} size={40}/>
 
           <div id="favourites-slider" className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
-            <MovieList movies={favourites} handleFavouritesClick={removeFavouriteMovie} favouriteComponent={RemoveFavourites}/>
+            <MovieList movies={favourites} handleFavouritesClick={removeFavouriteMovie} favouriteComponent={RemoveFavourites} message={"No se ha agregado peliculas favoritas"}/>
           </div>
           
           <MdChevronRight className='opacity-50 cursor-pointer hover:opacity-100' onClick={()=>slideRight("favourites-slider")} size={40}/>
@@ -119,7 +122,7 @@ function App() {
       
       
 
-        <ToastContainer /> 
+        <ToastContainer position="bottom-right" autoClose={2000}/> 
     </>
     
   )
