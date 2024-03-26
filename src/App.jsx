@@ -10,7 +10,7 @@ import { SearchBox } from "./components/SearchBox";
 function App() {
 
   const [movies, setMovies] =useState([])
-  const [searchValue, setSearchValue] =useState('')
+  const [searchValue, setSearchValue] =useState('star wars')
 
   //efecto de scroll
   const slideLeft = () =>{
@@ -28,8 +28,7 @@ function App() {
 
   
   
-  console.log(searchValue)
-  console.log("movies",movies)
+  
   useEffect( () =>{
       axios
       .get(
