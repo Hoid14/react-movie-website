@@ -51,22 +51,23 @@ function App() {
       })
     },[searchValue, api_key])
 
-    // useEffect(()=>{
-    //   const movieFavourites = JSON.parse(
-    //     localStorage.getItem('react-movie-website'))
-      
-    //   setFavourites(movieFavourites) 
-    // },[])
+    useEffect(()=>{
+      const movieFavourites = JSON.parse(
+      localStorage.getItem('react-movie-website'))
+      if (movieFavourites) {
+        setFavourites(movieFavourites) 
+      }
+    },[])
 
-    //const saveToLocalStorage = (items) => {
-    //  localStorage.setItem('react-movie-website', JSON.stringify(items))
-    //}
+    const saveToLocalStorage = (items) => {
+      localStorage.setItem('react-movie-website', JSON.stringify(items))
+    }
 
     const addFavouriteMovie = (movie) =>{
       if (favourites && !favourites.some(favourite => favourite.imdbID === movie.imdbID)) {
         const newFavouriteList = [...favourites, movie];
         setFavourites(newFavouriteList);
-        //saveToLocalStorage(newFavouriteList)
+        saveToLocalStorage(newFavouriteList)
         toast.success("¡Película agregada a favoritos!");
       } else {
         toast.error("Esta película ya está en tus favoritos.");
@@ -78,7 +79,7 @@ function App() {
       const newFavouriteList = favourites.filter(
         (favourite)=> favourite.imdbID !== movie.imdbID)
         setFavourites(newFavouriteList)
-        //saveToLocalStorage(newFavouriteList)
+        saveToLocalStorage(newFavouriteList)
         toast.success("¡Película eliminada de favoritos!");
     }
   
