@@ -52,14 +52,21 @@ function App() {
       })
     },[searchValue, api_key])
 
+
+    const saveToLocalStorage = (items) => {
+      localStorage.setItem('react-movie-website', JSON.stringify(items))
+    }
+
     const addFavouriteMovie = (movie) =>{
       if (!favourites.some(favourite => favourite.imdbID === movie.imdbID)) {
         const newFavouriteList = [...favourites, movie];
         setFavourites(newFavouriteList);
+        saveToLocalStorage(newFavouriteList)
         toast.success("¡Película agregada a favoritos!");
       } else {
         toast.error("Esta película ya está en tus favoritos.");
       }
+      
     }
 
     const removeFavouriteMovie = (movie) =>{
