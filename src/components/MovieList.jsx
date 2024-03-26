@@ -2,9 +2,6 @@
 export const MovieList = ({movies,favouriteComponent,handleFavouritesClick}) => {
   const  FavouriteComponent =favouriteComponent
   
-  if (!movies || movies.length === 0) {
-    return <div>Aun no has buscado peliculas</div>;
-  }
 
   return (
     <>
