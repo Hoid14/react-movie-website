@@ -3,23 +3,31 @@ import { useEffect, useState } from "react"
 import './App.css'
 import {MdChevronLeft, MdChevronRight} from 'react-icons/md'
 import { MovieList } from "./components/MovieList"
+import { AddFavourites } from "./components/AddFavourites"
+import { RemoveFavourites } from "./components/RemoveFavourites"
 import axios from 'axios';
 import { MovieListHeading } from "./components/MovieListHeading";
 import { SearchBox } from "./components/SearchBox";
 
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function App() {
 
   const [movies, setMovies] =useState([])
+  const [favourites, setFavourites] =useState([])
   const [searchValue, setSearchValue] =useState('star wars')
 
   //efecto de scroll
-  const slideLeft = () =>{
-    const slider =document.getElementById('slider')
+  const slideLeft = (id) =>{
+    const slider =document.getElementById(id)
     slider.scrollLeft = slider.scrollLeft - 500
   }
 
-  const slideRight = () =>{
-    const slider =document.getElementById('slider')
+  const slideRight = (id) =>{
+    const slider =document.getElementById(id)
     slider.scrollLeft = slider.scrollLeft + 500
   }
 
@@ -44,26 +52,60 @@ function App() {
       })
     },[searchValue, api_key])
 
+    const addFavouriteMovie = (movie) =>{
+      if (!favourites.some(favourite => favourite.imdbID === movie.imdbID)) {
+        const newFavouriteList = [...favourites, movie];
+        setFavourites(newFavouriteList);
+        toast.success("¡Película agregada a favoritos!");
+      } else {
+        toast.error("Esta película ya está en tus favoritos.");
+      }
+    }
+
+    const removeFavouriteMovie = (movie) =>{
+      const newFavouriteList = favourites.filter(
+        (favourite)=> favourite.imdbID !== movie.imdbID)
+        setFavourites(newFavouriteList)
+        toast.success("¡Película eliminada de favoritos!");
+    }
   
   return (
     <>
-      <div className="flex justify-between">
-        <MovieListHeading/>
+      <div className="flex justify-between m-4 text-lg">
+        <span className="font-bold"><MovieListHeading heading={"Peliculas"}/></span>
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue}/>
       </div>
-      {movies.length>0 && (
+      
         <div className="relative flex items-center">
               
-          <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={slideLeft} size={40}/>
+          <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={()=>slideLeft("search-slider")} size={40}/>
 
-          <div id="slider" className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
-            <MovieList movies={movies}/>
+          <div id="search-slider" className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
+            <MovieList movies={movies} handleFavouritesClick={addFavouriteMovie} favouriteComponent={AddFavourites}/>
           </div>
           
-          <MdChevronRight className='opacity-50 cursor-pointer hover:opacity-100' onClick={slideRight} size={40}/>
+          <MdChevronRight className='opacity-50 cursor-pointer hover:opacity-100' onClick={()=>slideRight("search-slider")} size={40}/>
         </div>
-      )}
+         
+  
+
+      <div className="m-4 text-lg font-bold">
+        <MovieListHeading heading={"Favoritas"}/>
+      </div>
+      <div className="relative flex items-center">
+              
+          <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={()=>slideLeft("favourites-slider")} size={40}/>
+
+          <div id="favourites-slider" className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
+            <MovieList movies={favourites} handleFavouritesClick={removeFavouriteMovie} favouriteComponent={RemoveFavourites}/>
+          </div>
+          
+          <MdChevronRight className='opacity-50 cursor-pointer hover:opacity-100' onClick={()=>slideRight("favourites-slider")} size={40}/>
+        </div>
       
+      
+
+        <ToastContainer /> 
     </>
     
   )

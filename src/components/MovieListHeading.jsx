@@ -1,7 +1,7 @@
-export const MovieListHeading = () => {
+export const MovieListHeading = ({heading}) => {
   return (
     <div>
-        <h1>Movies</h1>
+        <h1>{heading}</h1>
     </div>
   )
 }
