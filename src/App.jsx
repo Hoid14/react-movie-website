@@ -88,7 +88,7 @@ function App() {
   
   return (
     <>
-      <div className="flex justify-between m-4 text-lg">
+      <div className="flex items-center justify-between m-4 text-lg">
         <span className="font-bold"><MovieListHeading heading={"Peliculas"}/></span>
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue}/>
       </div>
